@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.2.9",
+    "@apollo/react-hoc": "^4.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.2.2",
@@ -10,17 +12,36 @@
     "@types/node": "^12.19.7",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
+    "autoprefixer": "^10.0.4",
+    "aws-appsync": "^4.0.1",
+    "aws-appsync-react": "^4.0.1",
+    "chart.js": "^2.9.4",
+    "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "postcss": "^8.1.10",
     "react": "^17.0.1",
+    "react-apollo": "^2.5.8",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "tailwindcss": "^2.0.1",
     "typescript": "^4.1.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "prestart": "npm run build:tailwind",
+    "prebuild": "npm run build:tailwind",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
+    "isready": "npm run format && npm run lint && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +60,27 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/react-router-dom": "^5.1.6",
+    "@typescript-eslint/eslint-plugin": "4.8.2",
+    "@typescript-eslint/parser": "4.8.2",
+    "babel-eslint": "10.1.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-airbnb-typescript": "12.0.0",
+    "eslint-config-prettier": "6.15.0",
+    "eslint-config-react-app": "6.0.0",
+    "eslint-import-resolver-typescript": "2.3.0",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-flowtype": "5.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "prettier": "2.2.0",
+    "prettier-eslint": "12.0.0",
+    "prettier-eslint-cli": "5.0.0"
   }
 }

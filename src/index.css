@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.BlueButton, .RedButton {
+  position: relative;
+  color: white;
+  transition: all 200ms;
+  outline: none !important;
+}
+
+.BlueButton:before, .RedButton:before{
+  display: 'block';
+  font-size: 42px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.BlueButton:before{
+  content: '+';
+}
+.RedButton:before{
+  content: '-';
+}
+
+.BlueButton:hover, .RedButton:hover{
+  color: black;
+}
