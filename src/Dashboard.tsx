@@ -11,6 +11,10 @@ import {
 } from './graphql/query';
 
 import {
+  ResetGame,
+} from './graphql/mutation';
+
+import {
   updatedGameSubscription,
 } from './graphql/subscription';
 
@@ -40,6 +44,7 @@ interface ChartDataState {
 type DashboardProps = {
   game: Game,
   subscribeToMoreClicks: Function,
+  resetGame: Function
 }
 
 const Loading = () => {
@@ -59,17 +64,29 @@ function Dashboard(props: DashboardProps) {
     blackData: []
   });
 
-  const { red, blue, black, clicks, createdAt, id } = props.game;
+  const { red, blue, black, clicks, createdAt, id } = props.game || {};
 
   React.useEffect(() => {
-    if (props.game.id) {
+    const onBeforeUnload = () => {
+      console.log('before unload reset game');
+      props.resetGame();
+      return;
+    }
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (props.game?.id) {
       console.log("start subscribeToMoreClicks", props.game.id);
       props.subscribeToMoreClicks(props.game.id);
     }
   }, [props.game]);
 
   React.useEffect(() => {
-    if (!props.game.id) return;
+    if (!props.game?.id) return;
 
     const updateChart = () => {
       const minTime = moment(clicks[0]?.createdAt).unix();
@@ -192,7 +209,7 @@ function Dashboard(props: DashboardProps) {
 export default compose(
   graphql(gql(GetGame), {
     options: {
-      fetchPolicy: 'cache-and-network'
+      fetchPolicy: 'no-cache'
     },
     props: (props: any) => ({
       game: props.data.getGame,
@@ -211,5 +228,14 @@ export default compose(
         })
       },
     })
+  }),
+  graphql(gql(ResetGame), {
+    options: {
+    },
+    props: (props: any) => ({
+      resetGame: () => {
+        props.mutate();
+      }
+    }),
   }),
 )(Dashboard);

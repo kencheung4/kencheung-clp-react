@@ -35,6 +35,7 @@ function Client(props: ClientProps) {
         console.warn("the game is not ready");
         return;
       }
+      console.log("props.game.id", props.game.id);
       if (color === 'blue') {
         props.clickBlue(props.game.id);
       } else if (color === 'red') {
@@ -56,7 +57,7 @@ function Client(props: ClientProps) {
 export default compose(
   graphql(gql(GetGame), {
     options: {
-      fetchPolicy: 'cache-and-network'
+      fetchPolicy: 'no-cache'
     },
     props: (props: any) => ({
       game: props.data.getGame

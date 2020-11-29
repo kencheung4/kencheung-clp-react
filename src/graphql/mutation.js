@@ -30,7 +30,16 @@ export const ClickRed = `
   }
 `
 
+export const ResetGame = `
+  mutation ResetGame{
+    resetGame {
+      id
+    }
+  }
+`
+
 export default {
   ClickBlue,
   ClickRed,
+  ResetGame,
 }

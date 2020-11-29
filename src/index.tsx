@@ -14,6 +14,7 @@ import AppSyncConfig from './aws-exports'
 const client = new AWSAppSyncClient({
   url: AppSyncConfig.aws_appsync_graphqlEndpoint,
   region: AppSyncConfig.aws_appsync_region,
+  disableOffline: true,
   auth: {
     // @ts-ignore
     type: AppSyncConfig.aws_appsync_authenticationType,
