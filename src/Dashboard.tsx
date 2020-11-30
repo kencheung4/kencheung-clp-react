@@ -71,6 +71,13 @@ function Dashboard(props: DashboardProps) {
 
   React.useEffect(() => {
     props.resetGame();
+    setChartData({
+      hasInit: true,
+      labels: [],
+      redData: [],
+      blueData: [],
+      blackData: []
+    });
   }, []);
 
   React.useEffect(() => {
