@@ -1,10 +1,12 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
+import { buildSubscription } from 'aws-appsync'
 import { graphqlMutation } from 'aws-appsync-react';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
 import _ from 'lodash';
+
 
 import {
   GetGame,
@@ -16,6 +18,7 @@ import {
 
 import {
   updatedGameSubscription,
+  resetedGameSubscription,
 } from './graphql/subscription';
 
 interface Click {
@@ -44,7 +47,7 @@ interface ChartDataState {
 type DashboardProps = {
   game: Game,
   subscribeToMoreClicks: Function,
-  resetGame: Function
+  resetGame: Function,
 }
 
 const Loading = () => {
@@ -67,15 +70,7 @@ function Dashboard(props: DashboardProps) {
   const { red, blue, black, clicks, createdAt, id } = props.game || {};
 
   React.useEffect(() => {
-    const onBeforeUnload = () => {
-      console.log('before unload reset game');
-      props.resetGame();
-      return;
-    }
-    window.addEventListener('beforeunload', onBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload);
-    }
+    props.resetGame();
   }, []);
 
   React.useEffect(() => {
@@ -231,6 +226,18 @@ export default compose(
   }),
   graphql(gql(ResetGame), {
     options: {
+      update: (cache, result: any) => {
+        console.log('reset game update cache', result);
+        const newGame = result.data.resetGame;
+        cache.writeQuery({
+          query: gql(GetGame),
+          data: {
+            getGame: {
+              ...result.data.resetGame
+            }
+          },
+        });
+      },
     },
     props: (props: any) => ({
       resetGame: () => {

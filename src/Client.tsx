@@ -12,6 +12,10 @@ import {
   GetGame,
 } from './graphql/query';
 
+import {
+  resetedGameSubscription,
+} from './graphql/subscription';
+
 interface Game {
   blue: number;
   red: number;
@@ -25,9 +29,16 @@ type ClientProps = {
   clickBlue: Function,
   clickRed: Function,
   game: Game,
+  subscribeResetGame: Function,
 };
 
 function Client(props: ClientProps) {
+
+  console.log("props.game.id", props.game?.id);
+
+  React.useEffect(() => {
+    props.subscribeResetGame();
+  }, []);
 
   const handleClick = (color: string) => {
     return (e: any) => {
@@ -60,7 +71,20 @@ export default compose(
       fetchPolicy: 'no-cache'
     },
     props: (props: any) => ({
-      game: props.data.getGame
+      game: props.data.getGame,
+      subscribeResetGame: () => {
+        props.data.subscribeToMore({
+          document: gql(resetedGameSubscription),
+          updateQuery: (prev: any, result: any) => {
+            console.log("subscribeResetGame updateQuery", result);
+            return {
+              getGame: {
+                ...result.subscriptionData.data.resetedGame,
+              },
+            }
+          }
+        })
+      },
     })
   }),
   graphql(gql(ClickBlue), {

@@ -14,6 +14,23 @@ export const updatedGameSubscription = `
   } 
 `
 
+export const resetedGameSubscription = `
+  subscription resetedGameSubscription {
+    resetedGame {
+      id
+      blue
+      red
+      black
+      clicks {
+        color
+        createdAt
+      }
+      createdAt
+    }
+  } 
+`
+
 export default {
   updatedGameSubscription,
+  resetedGameSubscription,
 }

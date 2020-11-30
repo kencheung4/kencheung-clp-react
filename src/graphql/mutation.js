@@ -34,6 +34,14 @@ export const ResetGame = `
   mutation ResetGame{
     resetGame {
       id
+      blue
+      red
+      black
+      clicks {
+        color
+        createdAt
+      }
+      createdAt
     }
   }
 `
