@@ -5,7 +5,7 @@ This project has used typescript, react, react-apollo, aws-appsync-react, and ta
 Please check /client, /dashboard page.
 
 ### /client
-* red & one blue button that is clickable.
+* red & blue button that is clickable.
 
 ### /dashboard
 * subscribe the clicks from client and show the real time result.
