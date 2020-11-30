@@ -1,3 +1,17 @@
+# About this project
+
+This project has used typescript, react, react-apollo, aws-appsync-react, and tailwind-css to do a real time dashboard demo.
+
+Please check /client, /dashboard page.
+
+### /client
+* red & one blue button that is clickable.
+
+### /dashboard
+* subscribe the clicks from client and show the real time result.
+* show the graph after 5 seconds of the client's action.
+* the graph will display recent 30 seconds clicks.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
